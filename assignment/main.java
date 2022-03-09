@@ -10,6 +10,8 @@
  */
 package assignment;
 
+import java.io.FileNotFoundException;
+
 /*
  * Main Class for control of all other classes.
  */
@@ -20,8 +22,16 @@ public class main {
 		/*
 		 * Calls GUI from GUI.java for user to interact with application
 		 */
-		GUI mine = new GUI("Machine Learning Model");
+		//GUI mine = new GUI("Machine Learning Model");
 		
+		try {
+			fileInputAndOutput fileInputAndOutput = new fileInputAndOutput();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//learningModel Learn = new learningModel();
 		
 	}
 }
