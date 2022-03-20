@@ -17,6 +17,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.*;
 import javax.swing.*;
 
@@ -115,20 +116,19 @@ public class GUI extends JFrame implements ActionListener{
         panel5.add(studiesBusinessBox);
         studiesBusinessBox.addActionListener(this);
         
+        button2 = new JButton();
+		panel6.add(button2);
+		button2.setText("<html><font size = '4'>  Start Machine</html>");
+		button2.setToolTipText("This button generates a random number");
+		button2.addActionListener(this);
+		button2.setPreferredSize(new Dimension(200,35));
         button1 = new JButton();
+        
 		panel6.add(button1);
 		button1.setText("<html><font size = '4'>  Calculate Probability</html>");
 		button1.setToolTipText("This button generates a random number");
 		button1.addActionListener(this);
 		button1.setPreferredSize(new Dimension(200,35));
-		
-//		button2 = new JButton();
-//		panel1.add(button2);
-//		button2.setText("<html><font size = '4'>  restart</html>");
-//		button2.setToolTipText("This button generates a random number");
-//		button2.addActionListener(this);
-//		button2.setPreferredSize(new Dimension(100,35));
-		
 
 		}
 		
@@ -137,7 +137,18 @@ public class GUI extends JFrame implements ActionListener{
 		{
 			if(e.getSource() == button1)
 			{
-				JOptionPane.showMessageDialog(this,"Probability should show here...");
+				//call probability from learning model
+			}
+			if(e.getSource() == button2)
+			{
+				//call learning mdoel to start training on data
+				fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
+				file.openFile();
+				file.readFile(0);
+//				for (int i = 0 ; i < file.data.length ;) {
+//					System.out.println(file.data[i]);
+//					i = i+5;
+//				}
 			}
 			
 		}

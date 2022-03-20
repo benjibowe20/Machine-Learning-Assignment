@@ -22,16 +22,16 @@ public class main {
 		/*
 		 * Calls GUI from GUI.java for user to interact with application
 		 */
-		//GUI mine = new GUI("Machine Learning Model");
+		//GUI assignmentGUI = new GUI("Machine Learning Model");
 		
-		try {
-			fileInputAndOutput fileInputAndOutput = new fileInputAndOutput();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
+//		file.openFile();
+//		file.readFile(0);
 		
-		//learningModel Learn = new learningModel();
+		learningModel.trainingModel();
+		
+//	
+//		learningModel Learn = new learningModel();
 		
 	}
 }

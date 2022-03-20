@@ -2,9 +2,19 @@ package assignment;
 
 public class learningModel {
 	
-	public learningModel(String[] array1, String[] array2, String[] array3) {
+	int probability;
+	
+	public learningModel(int probability) {
 		
-		System.out.println("gender: "+fileInputAndOutput.genderData);
+		this.probability = probability;
 		
+	}
+	
+	public static void trainingModel() {
+		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
+		file.openFile();
+		file.readFile(0);
+		
+		System.out.println(fileInputAndOutput.data[4]);
 	}
 }
