@@ -141,14 +141,10 @@ public class GUI extends JFrame implements ActionListener{
 			}
 			if(e.getSource() == button2)
 			{
-				//call learning mdoel to start training on data
-				fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
-				file.openFile();
-				file.readFile(0);
-//				for (int i = 0 ; i < file.data.length ;) {
-//					System.out.println(file.data[i]);
-//					i = i+5;
-//				}
+//				learningModel.collectData();
+//				learningModel.getEntriesForTraining();
+//				learningModel.priorProbability();
+//				learningModel.evidentialProbability();
 			}
 			
 		}

@@ -28,7 +28,15 @@ public class main {
 //		file.openFile();
 //		file.readFile(0);
 		
-		learningModel.trainingModel();
+//		learningModel.collectData();
+//		learningModel.getEntriesForTraining();
+//		learningModel.priorProbability();
+		learningModel.collectData();
+		learningModel.getEntriesForTraining();
+		learningModel.priorProbability();
+		System.out.println("\n");
+		learningModel.evidentialProbability();
+		
 		
 //	
 //		learningModel Learn = new learningModel();

@@ -51,7 +51,7 @@ public class fileInputAndOutput {
 					count++;
 				}
 			}
-			System.out.println("number of commas in first line: "+count);
+			//System.out.println("number of commas in first line: "+count);
 		}
 		catch (FileNotFoundException e1) {
 			System.out.println("File Not Found:" + e1.getMessage());
@@ -70,8 +70,8 @@ public class fileInputAndOutput {
 		
 		Pattern ptr = Pattern.compile(",");
 		data = ptr.split(line);
-		for (int i = 3; i < data.length ;) {
-			System.out.println(data[i]);
+		for (int i = 0; i < data.length ;) {
+			//System.out.println(data[i]);
 			i = i+5;
 				
 			
