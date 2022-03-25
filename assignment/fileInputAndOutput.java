@@ -69,7 +69,12 @@ public class fileInputAndOutput {
 		}
 		
 		Pattern ptr = Pattern.compile(",");
+		
+		
 		data = ptr.split(line);
+		
+		
+		
 		for (int i = 0; i < data.length ;) {
 			//System.out.println(data[i]);
 			i = i+5;

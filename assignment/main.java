@@ -36,6 +36,9 @@ public class main {
 		learningModel.priorProbability();
 		System.out.println("\n");
 		learningModel.evidentialProbability();
+		learningModel.computeLiklihoods();
+		//System.out.println("machine ready for input");
+		
 		
 		
 //	
