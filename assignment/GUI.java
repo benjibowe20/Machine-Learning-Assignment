@@ -51,7 +51,7 @@ public class GUI extends JFrame implements ActionListener{
 	 * Generation of GUI, Action Listeners...
 	 */
 	public GUI(String title) {
-		
+
 		super (title);
 		
 		JFrame frame = new JFrame();
@@ -87,6 +87,12 @@ public class GUI extends JFrame implements ActionListener{
 		JComboBox<String> genderBox = new JComboBox<>(gender);
         panel1.add(genderBox);
         genderBox.addActionListener(this);
+//        String genderBoxValue = (String)genderBox.getSelectedItem();
+//        String value = genderBox.getSelectedItem().toString();
+//        if (value.contains("Male") == true) {
+//        	value = "Male";
+//        }
+//        System.out.println(value);
         
 		JLabel label2 = new JLabel("<html><font size = '4'>Does student Parent own a business?</html>");
 		panel2.add(label2);
@@ -135,16 +141,26 @@ public class GUI extends JFrame implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
+			
 			if(e.getSource() == button1)
 			{
-				//call probability from learning model
+				System.out.println("\n");
+		        dataAnalysis.testData();
+		        System.out.println("\n");
+		        System.out.println("Completed Calculations.");
 			}
 			if(e.getSource() == button2)
 			{
-//				learningModel.collectData();
-//				learningModel.getEntriesForTraining();
-//				learningModel.priorProbability();
-//				learningModel.evidentialProbability();
+				
+				learningModel.collectData();
+				learningModel.getEntriesForTraining();
+				learningModel.priorProbability();
+				learningModel.evidentialProbability();
+				learningModel.computeLiklihoods();
+				button2.setEnabled(false);
+				System.out.println("Start-up Complete.");
+			
+				
 			}
 			
 		}

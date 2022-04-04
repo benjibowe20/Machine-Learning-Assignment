@@ -22,7 +22,7 @@ public class main {
 		/*
 		 * Calls GUI from GUI.java for user to interact with application
 		 */
-		//GUI assignmentGUI = new GUI("Machine Learning Model");
+		GUI assignmentGUI = new GUI("Machine Learning Model");
 		
 //		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
 //		file.openFile();
@@ -31,13 +31,19 @@ public class main {
 //		learningModel.collectData();
 //		learningModel.getEntriesForTraining();
 //		learningModel.priorProbability();
-		learningModel.collectData();
-		learningModel.getEntriesForTraining();
-		learningModel.priorProbability();
-		System.out.println("\n");
-		learningModel.evidentialProbability();
-		learningModel.computeLiklihoods();
-		//System.out.println("machine ready for input");
+//		learningModel.collectData();
+//		learningModel.getEntriesForTraining();
+//		learningModel.priorProbability();
+//		System.out.println("\n");
+//		learningModel.evidentialProbability();
+//		learningModel.computeLiklihoods();
+//		System.out.println("machine ready for input");
+//		learningModel.collectData();
+//		learningModel.getEntriesForTraining();
+//		learningModel.priorProbability();
+//		System.out.println("\n");
+//		learningModel.evidentialProbability();
+//		learningModel.computeLiklihoods();
 		
 		
 		

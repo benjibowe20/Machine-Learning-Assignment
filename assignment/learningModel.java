@@ -14,38 +14,63 @@ public class learningModel {
 	static ArrayList<String> addressData = new ArrayList<String>();
 	static ArrayList<String> entreprenuerData = new ArrayList<String>();
 	static ArrayList<Integer> randomArrayIndexes = new ArrayList<Integer>();
-	double yesPrior;
-	double noPrior;
-	double totalCount = randomArrayIndexes.size();
+	static ArrayList<Integer> testDataIndexes = new ArrayList<Integer>();
 	
-	double pMale = 0;
-	double pFemale = 0;
-	double maleCount = 0;
+	static double entreprenuerCount = 0;
+	static double notEntreprenuerCount = 0;
 	
-	double pParentHasBusiness = 0;
-	double pParentHasNoBusiness = 0;
-	double parentHasBusinessCount = 0;
+	static double maleEntreprenuerCount = 0;
+	static double studiesBusinessEntreprenuerCount = 0;
+	static double urbanEntreprenuerCount = 0;
+	static double hasJobCount = 0;
+	static double parentHasBusinessCount = 0;
 	
-	double pHasJob = 0;
-	double pHasNoJob = 0;
-	double hasJobCount = 0;
+	static double maleNotEntreprenuerCount = 0;
+	static double studiesBusinessNotEntreprenuerCount = 0;
+	static double urbanNotEntreprenuerCount = 0;
+	static double hasJobNotCount = 0;
+	static double parentHasBusinessNotCount = 0;
 	
-	double pUrbanAddress = 0;
-	double pRuralAddress = 0;
-	double urbanAddressCount = 0;
+	static double maleGivenEntreprenuer = 0;
+	static double femaleGivenEntreprenuer = 0;
+	static double studiesBusinessEntreprenuer = 0;
+	static double noStudiesBusinessEntreprenuer = 0;
+	static double urbanEntreprenuer = 0;
+	static double ruralEntreprenuer = 0;
+	static double hasJobEntrepreneur = 0;
+	static double hasNoJobEntrepreneur = 0;
+	static double parentBusinessEntrepreneur = 0;
+	static double noParentBusinessEntrepreneur = 0;
 	
-	double pStudiesBusiness = 0;
-	double pNoBusinessStudies = 0;
-	double studiesBusinessCount = 0;
+	static double maleGivenNotEntreprenuer = 0;
+	static double femaleGivenNotEntreprenuer = 0;
+	static double studiesBusinessNotEntreprenuer = 0;
+	static double noStudiesBusinessNotEntreprenuer = 0;
+	static double urbanNotEntreprenuer = 0;
+	static double ruralNotEntreprenuer = 0;
+	static double hasJobNotEntrepreneur = 0;
+	static double hasNoJobNotEntrepreneur = 0;
+	static double parentBusinessNotEntrepreneur = 0;
+	static double noParentBusinessNotEntrepreneur = 0;
 	
-	double yesCount = 0;
-	double noCount = 0;
+	static double yesPrior = 0;
+	static double noPrior = 0;
+	static double totalCount = randomArrayIndexes.size();
+	static double yesCount = 0;
+	static double noCount = 0;
 	
-	public learningModel(int probability) {
-		
-		this.probability = probability;
-		
-	}
+	static double pStudiesBusiness = 0;
+	static double pNoBusinessStudies = 0;
+	static double pUrbanAddress = 0;
+	static double pRuralAddress = 0;
+	static double pHasJob = 0;
+	static double pHasNoJob = 0;
+	static double pParentHasBusiness = 0;
+	static double pParentHasNoBusiness = 0;
+	static double pMale = 0;
+	static double pFemale = 0;
+	
+	
 	
 	public static void collectData() {
 		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
@@ -126,22 +151,25 @@ public class learningModel {
 			
 		}
 		
-		//System.out.println(randomArrayIndexes);
+		for (int i = 1; i <= numberOfEntries; i++) {
+			if (randomArrayIndexes.contains(i) == false) {
+				testDataIndexes.add(i);
+			}
+		}
+		
+//		System.out.println(randomArrayIndexes);
+//		System.out.println(testDataIndexes);
 		
 		
 	}
 	
 	public static void priorProbability () {
 		
-		double yesPrior = 0;
-		double noPrior = 0;
-		double totalCount = randomArrayIndexes.size();
-		double yesCount = 0;
-		double noCount = 0;
+		double countAll = randomArrayIndexes.size();
 		
-		//System.out.println("Number of entries: "+totalCount);
+//		System.out.println("Number of entries: "+countAll);
 		
-		for (int a = 0; a < totalCount ; a++) {
+		for (int a = 0; a < countAll ; a++) {
 			int num = randomArrayIndexes.get(a);
 			if (entreprenuerData.get(num) == "Yes") {
 				yesCount = yesCount + 1;
@@ -151,8 +179,10 @@ public class learningModel {
 			}
 		}
 		
-		yesPrior = yesCount/totalCount;
-		noPrior = noCount/totalCount;
+//		System.out.println(yesCount);
+		
+		yesPrior = yesCount/countAll;
+		noPrior = noCount/countAll;
 		
 //		System.out.println("Prior probability of Yes: "+yesPrior);
 //		System.out.println("Prior probability of No: "+noPrior);
@@ -161,27 +191,11 @@ public class learningModel {
 	public static void evidentialProbability() {
 		
 		double totalCount = randomArrayIndexes.size();
-		
-		double pMale = 0;
-		double pFemale = 0;
 		double maleCount = 0;
-		
-		double pParentHasBusiness = 0;
-		double pParentHasNoBusiness = 0;
 		double parentHasBusinessCount = 0;
-		
-		double pHasJob = 0;
-		double pHasNoJob = 0;
 		double hasJobCount = 0;
-		
-		double pUrbanAddress = 0;
-		double pRuralAddress = 0;
 		double urbanAddressCount = 0;
-		
-		double pStudiesBusiness = 0;
-		double pNoBusinessStudies = 0;
 		double studiesBusinessCount = 0;
-		
 		for (int a = 0; a < totalCount ; a++) {
 			int num1 = randomArrayIndexes.get(a);
 			if (genderData.get(num1).contains("Male") == true) {
@@ -217,6 +231,8 @@ public class learningModel {
 		pMale = maleCount/totalCount;
 		pFemale = 1-pMale;
 		
+		System.out.println(maleCount);
+		
 		pParentHasBusiness = parentHasBusinessCount/totalCount;
 		pParentHasNoBusiness = 1-pParentHasBusiness;
 		
@@ -239,90 +255,119 @@ public class learningModel {
 //		System.out.println("Rural Address Probability: "+pRuralAddress);
 //		System.out.println("Studies business probability: "+pStudiesBusiness);
 //		System.out.println("No business studies: "+pNoBusinessStudies);
+		
+		//System.out.println("Male Count: "+maleCount);
 	}
 	
 	public static void computeLiklihoods() {
 		
-		//calculate liklihood of entreprenuer given they are male
+		double totalCount = randomArrayIndexes.size();
 		
-		/*
-		 *  **WORKING FROM BAYES THEOREM INTO CODE THAT CAN BE REUSED FOR OTHER DATA POINTS**
-		 * 
-		 * 
-		 *	           	          P(M|E) * P(E) 
-		 *  P(E|M) =    ___________________________________
-		 *          
-		 *          	P(M|E) * P(E) + P(M|notE) * P(notM)
-		 *          
-		 *        
-		 *  *TOP LINE OF THEOREM*     
-		 *          
-		 *  p(genderData(male) | entreprenuerData == (yes)) * p(entreprenuerData(yes))
-		 *  
-		 *  ----------------------------------------------------------------------------
-		 *  
-		 *  **NOTE: THE LETTER 'g' STANDS FOR GIVEN OR |
-		 *  
-		 *  for (int a = 0; a < randomArrayIndexes.size() ; a++) {
-		 *  
-		 *  	if (entreprenuerData.get(i).contains("Yes") == true) {
-		 *  		
-		 *  		entreprenuerCount + 1;		
-		 *  
-		 *  	}
-		 *  
-		 *  	if (genderData.get(i).contains("Male") == true && entreprenuerData.get(i).contains("Yes") == true) {
-		 *  		 
-		 *  		double maleEntreprenuerCount + 1;
-		 *  	}
-		 *  
-		 *  }
-		 *  
-		 *  double pMgE = maleEntreprenuerCount / randomArrayIndexes.size();
-		 *  
-		 *  double pE = entreprenuerCount / randomArrayIndexes.size();
-		 *          
-		 *  --> pMgE * pE;
-		 *  
-		 *         
-		 *  *BOTTOM LINE OF THEOREM*
-		 *  
-		 *  p(genderData(male) | (entreprenuerData == (yes)) * p(entreprenuerData(yes)) + p(genderData(male) | (entreprenuerData == (no)) * p(female)
-		 *          
-		 *  ----------------------------------------------------------------------------        
-		 *          
-		 *  **NOTE: LEFT SIDE OF DENOMINATOR CAN BE TAKEN FROM NUMERATOR
-		 *  
-		 *  WE HAVE: pMgE * pE
-		 *  
-		 *  for (int a = 0; a < randomArrayIndexes.size() ; a++) {
-		 *  
-		 *  	if (genderData.get(i).contains("Male") == true && entreprenuerData.get(i).contains("No") == true) {
-		 *  		 
-		 *  		double maleNotEntreprenuerCount + 1;
-		 *  	}
-		 *  
-		 *  }
-		 *  
-		 *  double pMgNE = maleNotEntreprenuerCount / randomArrayIndexes.size();
-		 *  
-		 *  double pNotM = femaleCount;
-		 *  
-		 *  --> (pMgE * pE) + (pMgNE * pNotM);
-		 * 
-		 *  
-		 *  ----------------------------------------------------------------------------
-		 *  
-		 *  **PUT IT ALL TOGETHER**
-		 *  
-		 *  p(E|M) = pMgE * pE / (pMgE * pE) + (pMgNE * pNotM);
-		 *  
-		 *  
-		 *  
-		 *  
-		*/
+		for (int i = 0; i < totalCount ; i++) {
+			int num5 = randomArrayIndexes.get(i);
+			if (entreprenuerData.get(num5).contains("Yes") == true) {
+				entreprenuerCount = entreprenuerCount + 1;
+				if (genderData.get(num5).contains("Male") == true) {
+					maleEntreprenuerCount++;
+				}
+				if (studiesBusinessData.get(num5).contains("Yes") == true) {
+					studiesBusinessEntreprenuerCount++;
+				}
+				if (addressData.get(num5).contains("Urban") == true) {
+					urbanEntreprenuerCount++;
+				}
+				if (jobData.get(num5).contains("Yes") == true) {
+					hasJobCount++;
+				}
+				if (parentBusinessData.get(num5).contains("Yes") == true) {
+					parentHasBusinessCount++;
+				}
+			}
+		}
 		
+		maleGivenEntreprenuer = maleEntreprenuerCount / entreprenuerCount;
+		femaleGivenEntreprenuer = 1-maleGivenEntreprenuer;
 		
+		studiesBusinessEntreprenuer = studiesBusinessEntreprenuerCount / entreprenuerCount;
+		noStudiesBusinessEntreprenuer = 1 - studiesBusinessEntreprenuer;
+		
+		urbanEntreprenuer = urbanEntreprenuerCount / entreprenuerCount;
+		ruralEntreprenuer = 1 - urbanEntreprenuer;
+		
+		hasJobEntrepreneur = hasJobCount / entreprenuerCount;
+		hasNoJobEntrepreneur = 1 - hasJobEntrepreneur;
+		
+		parentBusinessEntrepreneur = parentHasBusinessCount / entreprenuerCount;
+		noParentBusinessEntrepreneur = 1 - parentBusinessEntrepreneur;
+		
+//		System.out.println("Probability male given entreprenuer: "+maleGivenEntreprenuer);
+//		System.out.println("Probability female given entreprenuer: "+femaleGivenEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability studies business given entreprenuer: "+studiesBusinessEntreprenuer);
+//		System.out.println("Probability doesnt study business given entreprenuer: "+noStudiesBusinessEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability urban address given entreprenuer: "+urbanEntreprenuer);
+//		System.out.println("Probability rural address given entreprenuer: "+ruralEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability has job given entreprenuer: "+hasJobEntrepreneur);
+//		System.out.println("Probability has no job given entreprenuer: "+hasNoJobEntrepreneur);
+//		System.out.println("\n");
+//		System.out.println("Probability parent has business given entreprenuer: "+parentBusinessEntrepreneur);
+//		System.out.println("Probability parent has no business given entreprenuer: "+noParentBusinessEntrepreneur);
+//		System.out.println("\n");
+		
+		for (int i = 0; i < totalCount ; i++) {
+			int num5 = randomArrayIndexes.get(i);
+			if (entreprenuerData.get(num5).contains("No") == true) {
+				notEntreprenuerCount = notEntreprenuerCount + 1;
+				if (genderData.get(num5).contains("Male") == true) {
+					maleNotEntreprenuerCount++;
+				}
+				if (studiesBusinessData.get(num5).contains("Yes") == true) {
+					studiesBusinessNotEntreprenuerCount++;
+				}
+				if (addressData.get(num5).contains("Urban") == true) {
+					urbanNotEntreprenuerCount++;
+				}
+				if (jobData.get(num5).contains("Yes") == true) {
+					hasJobNotCount++;
+				}
+				if (parentBusinessData.get(num5).contains("Yes") == true) {
+					parentHasBusinessNotCount++;
+				}
+			}
+		}
+		maleGivenNotEntreprenuer = maleNotEntreprenuerCount / notEntreprenuerCount;
+		femaleGivenNotEntreprenuer = 1-maleGivenNotEntreprenuer;
+		
+		studiesBusinessNotEntreprenuer = studiesBusinessNotEntreprenuerCount / notEntreprenuerCount;
+		noStudiesBusinessNotEntreprenuer = 1 - studiesBusinessNotEntreprenuer;
+		
+		urbanNotEntreprenuer = urbanNotEntreprenuerCount / notEntreprenuerCount;
+		ruralNotEntreprenuer = 1 - urbanNotEntreprenuer;
+		
+		hasJobNotEntrepreneur = hasJobNotCount / notEntreprenuerCount;
+		hasNoJobNotEntrepreneur = 1 - hasJobNotEntrepreneur;
+		
+		parentBusinessNotEntrepreneur = parentHasBusinessNotCount / notEntreprenuerCount;
+		noParentBusinessNotEntrepreneur = 1 - parentBusinessNotEntrepreneur;
+		
+//		System.out.println("------------------------------------------------------------------------------");
+//		System.out.println("\n");
+//		System.out.println("Probability male given not entreprenuer: "+maleGivenNotEntreprenuer);
+//		System.out.println("Probability female given not entreprenuer: "+femaleGivenNotEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability studies business given not entreprenuer: "+studiesBusinessNotEntreprenuer);
+//		System.out.println("Probability doesnt study business given not entreprenuer: "+noStudiesBusinessNotEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability urban address given not entreprenuer: "+urbanNotEntreprenuer);
+//		System.out.println("Probability rural address given not entreprenuer: "+ruralNotEntreprenuer);
+//		System.out.println("\n");
+//		System.out.println("Probability has job given not entreprenuer: "+hasJobNotEntrepreneur);
+//		System.out.println("Probability has no job given not entreprenuer: "+hasNoJobNotEntrepreneur);
+//		System.out.println("\n");
+//		System.out.println("Probability parent has business given not entreprenuer: "+parentBusinessNotEntrepreneur);
+//		System.out.println("Probability parent has no business given not entreprenuer: "+noParentBusinessNotEntrepreneur);
 		
 		
 	}
