@@ -2,7 +2,7 @@
  * Machine Learning Model, using Naive Bayes.
  * Author: Benji Bowe
  * Student Number: C20416006
- * Last edited: 08/03/2022
+ * Last edited: 15/04/2022
  */
 
 /*
@@ -10,45 +10,22 @@
  */
 package assignment;
 
-import java.io.FileNotFoundException;
-
 /*
- * Main Class for control of all other classes.
+ * Main Class which acts as a root for all other classes.
  */
 public class main {
 	
+	/*
+	 * Main method to control GUI and therefore control all other classes
+	 */
 	public static void main(String[] args) {
 		
 		/*
 		 * Calls GUI from GUI.java for user to interact with application
+		 * All other classes are used through the GUI
 		 */
+		
 		GUI assignmentGUI = new GUI("Machine Learning Model");
-		
-//		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
-//		file.openFile();
-//		file.readFile(0);
-		
-//		learningModel.collectData();
-//		learningModel.getEntriesForTraining();
-//		learningModel.priorProbability();
-//		learningModel.collectData();
-//		learningModel.getEntriesForTraining();
-//		learningModel.priorProbability();
-//		System.out.println("\n");
-//		learningModel.evidentialProbability();
-//		learningModel.computeLiklihoods();
-//		System.out.println("machine ready for input");
-//		learningModel.collectData();
-//		learningModel.getEntriesForTraining();
-//		learningModel.priorProbability();
-//		System.out.println("\n");
-//		learningModel.evidentialProbability();
-//		learningModel.computeLiklihoods();
-		
-		
-		
-//	
-//		learningModel Learn = new learningModel();
 		
 	}
 }

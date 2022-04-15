@@ -1,12 +1,37 @@
+/*Object Oriented Programming Assignment 2022.
+ * Machine Learning Model, using Naive Bayes.
+ * Author: Benji Bowe
+ * Student Number: C20416006
+ * Last edited: 15/04/2022
+ */
+
+/*
+ * This class is used for calculating the folliowing:
+ * 		- Prior Probabilities
+ * 		- Evidential Probabilities
+ * 		- Compute Liklihoods
+ * 
+ * The class is also used to put the data into smaller arrays
+ * 
+ * The calculations are based on a random 70% of the dataset so results are varied and more accurate
+ */
+
+/*
+ * Assignment Package
+ */
 package assignment;
 
+/*
+ * Imports used in class
+ */
 import java.util.ArrayList;
-import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class learningModel {
 	
-	int probability;
-	int i = 0;
+	/*
+	 * Arraylists made to put all similar data togeteher
+	 */
 	static ArrayList<String> studiesBusinessData = new ArrayList<String>();
 	static ArrayList<String> genderData = new ArrayList<String>();
 	static ArrayList<String> parentBusinessData = new ArrayList<String>();
@@ -15,6 +40,12 @@ public class learningModel {
 	static ArrayList<String> entreprenuerData = new ArrayList<String>();
 	static ArrayList<Integer> randomArrayIndexes = new ArrayList<Integer>();
 	static ArrayList<Integer> testDataIndexes = new ArrayList<Integer>();
+	
+	/*
+	 * Below are all variables used in this class which contribute to calculations or storing of calculated outputs
+	 */
+	int probability;
+	int i = 0;
 	
 	static double entreprenuerCount = 0;
 	static double notEntreprenuerCount = 0;
@@ -71,21 +102,31 @@ public class learningModel {
 	static double pFemale = 0;
 	
 	
-	
+	/*
+	 * Method for collecting data and putting all similar data into its own arraylist
+	 */
 	public static void collectData() {
-		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/MLdata.csv");
+		
+		/*
+		 * Asks user to enter a filename which they would like to use
+		 */
+		String fileName = JOptionPane.showInputDialog("Please enter the file name you would like to use.");
+		fileInputAndOutput file = new fileInputAndOutput("/Users/35385/"+fileName);
 		file.openFile();
 		file.readFile(0);
 		
-		
+		/*
+		 * Places all data related to Student studying business into a studentBusinessData array
+		 */
 		for (int i = 5; i < fileInputAndOutput.data.length;) {
-			//System.out.println(fileInputAndOutput.data[i]);
 			studiesBusinessData.add(fileInputAndOutput.data[i]);
 			i = i+5;
 		}
 		
+		/*
+		 * Places all data related to Student becoming an entrepreneur into entrepreneurData array
+		 */
 		for (int i = 6; i < fileInputAndOutput.data.length;) {
-			//System.out.println(fileInputAndOutput.data[i]);
 			if (fileInputAndOutput.data[i].contains("Yes")) {
 				entreprenuerData.add("Yes");
 			}
@@ -94,8 +135,11 @@ public class learningModel {
 			}
 			i = i+5;
 		}
+		
+		/*
+		 * Places all data related to Student gender into a genderData array
+		 */
 		for (int i = 1; i < fileInputAndOutput.data.length;) {
-			//System.out.println(fileInputAndOutput.data[i]);
 			if (fileInputAndOutput.data[i].contains("Female")) {
 				genderData.add("Female");
 			}
@@ -105,43 +149,50 @@ public class learningModel {
 			i = i+5;
 		}
 		
+		/*
+		 * Places all data related to Student parent owning business into parentBusinessData
+		 */
 		for (int i = 2; i < fileInputAndOutput.data.length;) {
 			parentBusinessData.add(fileInputAndOutput.data[i]);
 			i = i+5;
 		}
 		
+		/*
+		 * Places all data related to Student having a part-time job into a jobData array
+		 */
 		for (int i = 3; i < fileInputAndOutput.data.length;) {
-			//System.out.println(fileInputAndOutput.data[i]);
 			jobData.add(fileInputAndOutput.data[i]);
 			i = i+5;
 		}
 		
+		/*
+		 * Places all data related to Student address into a addressData array
+		 */
 		for (int i = 4; i < fileInputAndOutput.data.length;) {
-			//System.out.println(fileInputAndOutput.data[i]);
 			addressData.add(fileInputAndOutput.data[i]);
 			i = i+5;
 		}
-			
-//		System.out.println("Studies business data: "+studiesBusinessData);
-//		System.out.println("Becomes Entreprenuer data: "+entreprenuerData);
-//		System.out.println("Gender data: "+genderData);
-//		System.out.println("Parent business data: "+parentBusinessData);
-//		System.out.println("Address data: "+addressData);
-//		System.out.println("Part-time job data: "+jobData);
 		
 	}
 	
+	/*
+	 * This method is gets the 70% of the dataset and creates an array consisting of the random indexes oif that 70%
+	 */
 	public static void getEntriesForTraining() {
 		
+		/*
+		 * variables used in method
+		 */
 		double numberOfEntries = entreprenuerData.size();
 		double get70Percent = numberOfEntries * 0.7;
 		int rounded = (int) get70Percent;
 		int num;
 		
-//		System.out.println("Number of entries: "+numberOfEntries);
-//		System.out.println("70% of entries: "+get70Percent);
-//		System.out.println("Rounded 70%: "+rounded);
-		
+		/*
+		 * Creates a random array of indexes which are used for training
+		 * 
+		 * These numbers account for 70% of the entire dataset provided
+		 */
 		for (int i = 1; i <= rounded ;i ++) {
 			num = (int) (Math.floor(Math.random()*numberOfEntries));
 			while (randomArrayIndexes.contains(num)==true ) {
@@ -151,24 +202,31 @@ public class learningModel {
 			
 		}
 		
+		/*
+		 * Creates an array of indexes used for testing
+		 * 
+		 * These indexes are the remaining 30% which were not used in testing
+		 */
 		for (int i = 1; i <= numberOfEntries; i++) {
 			if (randomArrayIndexes.contains(i) == false) {
 				testDataIndexes.add(i);
 			}
 		}
 		
-//		System.out.println(randomArrayIndexes);
-//		System.out.println(testDataIndexes);
 		
 		
 	}
 	
+	/*
+	 * This method calculates the prior probability of entreprenuer and not entrepreneur
+	 */
 	public static void priorProbability () {
 		
 		double countAll = randomArrayIndexes.size();
 		
-//		System.out.println("Number of entries: "+countAll);
-		
+		/*
+		 * Counts number of entrepreneurs and not entrepreneurs
+		 */
 		for (int a = 0; a < countAll ; a++) {
 			int num = randomArrayIndexes.get(a);
 			if (entreprenuerData.get(num) == "Yes") {
@@ -179,15 +237,17 @@ public class learningModel {
 			}
 		}
 		
-//		System.out.println(yesCount);
-		
+		/*
+		 * Calculation for prior probabilities
+		 */
 		yesPrior = yesCount/countAll;
 		noPrior = noCount/countAll;
 		
-//		System.out.println("Prior probability of Yes: "+yesPrior);
-//		System.out.println("Prior probability of No: "+noPrior);
 	}
 	
+	/*
+	 * This method is used for calculating the evidential probabilties which goes in the denominator
+	 */
 	public static void evidentialProbability() {
 		
 		double totalCount = randomArrayIndexes.size();
@@ -196,6 +256,10 @@ public class learningModel {
 		double hasJobCount = 0;
 		double urbanAddressCount = 0;
 		double studiesBusinessCount = 0;
+		
+		/*
+		 * Counts number of males
+		 */
 		for (int a = 0; a < totalCount ; a++) {
 			int num1 = randomArrayIndexes.get(a);
 			if (genderData.get(num1).contains("Male") == true) {
@@ -203,24 +267,39 @@ public class learningModel {
 			}
 		}
 		
+		/*
+		 * Counts number of students whos parent owns business
+		 */
 		for (int b = 0; b < totalCount ; b++) {
 			int num2 = randomArrayIndexes.get(b);
 			if (parentBusinessData.get(num2).contains("Yes") == true) {
 				parentHasBusinessCount = parentHasBusinessCount + 1;
 			}
 		}
+		
+		/*
+		 * Counts number of students who have a part time job
+		 */
 		for (int c = 0; c < totalCount ; c++) {
 			int num3 = randomArrayIndexes.get(c);
 			if (jobData.get(num3).contains("Yes") == true) {
 				hasJobCount = hasJobCount + 1;
 			}
 		}
+		
+		/*
+		 * Counts number of students with urban address
+		 */
 		for (int d = 0; d < totalCount ; d++) {
 			int num4 = randomArrayIndexes.get(d);
 			if (addressData.get(num4).contains("Urban") == true) {
 				urbanAddressCount = urbanAddressCount + 1;
 			}
 		}
+		
+		/*
+		 * Counts number of studentrs who study business
+		 */
 		for (int f = 0; f < totalCount ; f++) {
 			int num5 = randomArrayIndexes.get(f);
 			if (studiesBusinessData.get(num5).contains("Yes") == true) {
@@ -228,10 +307,11 @@ public class learningModel {
 			}
 		}
 		
+		/*
+		 * Evidential probabilities of each trait
+		 */
 		pMale = maleCount/totalCount;
 		pFemale = 1-pMale;
-		
-		System.out.println(maleCount);
 		
 		pParentHasBusiness = parentHasBusinessCount/totalCount;
 		pParentHasNoBusiness = 1-pParentHasBusiness;
@@ -245,24 +325,18 @@ public class learningModel {
 		pStudiesBusiness = studiesBusinessCount/totalCount;
 		pNoBusinessStudies = 1 - pStudiesBusiness;
 		
-//		System.out.println("Male Probability: "+pMale);
-//		System.out.println("Female Probability: "+pFemale);
-//		System.out.println("Parent has Business probability: "+pParentHasBusiness);
-//		System.out.println("Parent doesnt have Business probability: "+pParentHasNoBusiness);
-//		System.out.println("Has a part-time job probability: "+pHasJob);
-//		System.out.println("Doesnt have a part time job probability: "+pHasNoJob);
-//		System.out.println("Urban Address Probability: "+pUrbanAddress);
-//		System.out.println("Rural Address Probability: "+pRuralAddress);
-//		System.out.println("Studies business probability: "+pStudiesBusiness);
-//		System.out.println("No business studies: "+pNoBusinessStudies);
-		
-		//System.out.println("Male Count: "+maleCount);
 	}
 	
+	/*
+	 * This methoid calculates the liklihoods which goes in the numerator
+	 */
 	public static void computeLiklihoods() {
 		
 		double totalCount = randomArrayIndexes.size();
 		
+		/*
+		 * For loop which creates a count of all different traits if trait is yes, urban, male
+		 */
 		for (int i = 0; i < totalCount ; i++) {
 			int num5 = randomArrayIndexes.get(i);
 			if (entreprenuerData.get(num5).contains("Yes") == true) {
@@ -285,6 +359,9 @@ public class learningModel {
 			}
 		}
 		
+		/*
+		 * Calculations for likilihoods of each trait if trait is yes, urban, male
+		 */
 		maleGivenEntreprenuer = maleEntreprenuerCount / entreprenuerCount;
 		femaleGivenEntreprenuer = 1-maleGivenEntreprenuer;
 		
@@ -300,22 +377,9 @@ public class learningModel {
 		parentBusinessEntrepreneur = parentHasBusinessCount / entreprenuerCount;
 		noParentBusinessEntrepreneur = 1 - parentBusinessEntrepreneur;
 		
-//		System.out.println("Probability male given entreprenuer: "+maleGivenEntreprenuer);
-//		System.out.println("Probability female given entreprenuer: "+femaleGivenEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability studies business given entreprenuer: "+studiesBusinessEntreprenuer);
-//		System.out.println("Probability doesnt study business given entreprenuer: "+noStudiesBusinessEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability urban address given entreprenuer: "+urbanEntreprenuer);
-//		System.out.println("Probability rural address given entreprenuer: "+ruralEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability has job given entreprenuer: "+hasJobEntrepreneur);
-//		System.out.println("Probability has no job given entreprenuer: "+hasNoJobEntrepreneur);
-//		System.out.println("\n");
-//		System.out.println("Probability parent has business given entreprenuer: "+parentBusinessEntrepreneur);
-//		System.out.println("Probability parent has no business given entreprenuer: "+noParentBusinessEntrepreneur);
-//		System.out.println("\n");
-		
+		/*
+		 * For loop which creates a count of all different traits if trait is no, rural, female
+		 */
 		for (int i = 0; i < totalCount ; i++) {
 			int num5 = randomArrayIndexes.get(i);
 			if (entreprenuerData.get(num5).contains("No") == true) {
@@ -337,6 +401,10 @@ public class learningModel {
 				}
 			}
 		}
+		
+		/*
+		 * Calculates liklihoods of traits if trait is no, rural, female
+		 */
 		maleGivenNotEntreprenuer = maleNotEntreprenuerCount / notEntreprenuerCount;
 		femaleGivenNotEntreprenuer = 1-maleGivenNotEntreprenuer;
 		
@@ -351,23 +419,6 @@ public class learningModel {
 		
 		parentBusinessNotEntrepreneur = parentHasBusinessNotCount / notEntreprenuerCount;
 		noParentBusinessNotEntrepreneur = 1 - parentBusinessNotEntrepreneur;
-		
-//		System.out.println("------------------------------------------------------------------------------");
-//		System.out.println("\n");
-//		System.out.println("Probability male given not entreprenuer: "+maleGivenNotEntreprenuer);
-//		System.out.println("Probability female given not entreprenuer: "+femaleGivenNotEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability studies business given not entreprenuer: "+studiesBusinessNotEntreprenuer);
-//		System.out.println("Probability doesnt study business given not entreprenuer: "+noStudiesBusinessNotEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability urban address given not entreprenuer: "+urbanNotEntreprenuer);
-//		System.out.println("Probability rural address given not entreprenuer: "+ruralNotEntreprenuer);
-//		System.out.println("\n");
-//		System.out.println("Probability has job given not entreprenuer: "+hasJobNotEntrepreneur);
-//		System.out.println("Probability has no job given not entreprenuer: "+hasNoJobNotEntrepreneur);
-//		System.out.println("\n");
-//		System.out.println("Probability parent has business given not entreprenuer: "+parentBusinessNotEntrepreneur);
-//		System.out.println("Probability parent has no business given not entreprenuer: "+noParentBusinessNotEntrepreneur);
 		
 		
 	}
